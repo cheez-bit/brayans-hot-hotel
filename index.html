@@ -80,6 +80,8 @@
         }
         #menu {
             position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.98);
@@ -88,9 +90,11 @@
             justify-content: center;
             align-items: center;
             z-index: 2000;
+            pointer-events: auto;
         }
         #menu.hidden {
             display: none !important;
+            pointer-events: none;
         }
         .menu-title {
             font-size: 48px;
@@ -110,6 +114,7 @@
             border-radius: 5px;
             transition: all 0.3s;
             font-weight: bold;
+            pointer-events: auto;
         }
         .menu-button:hover {
             background: #00ff00;
@@ -132,8 +137,8 @@
 <body>
     <div id="menu">
         <div class="menu-title">🔥 BRAYAN'S HOT HOTEL 🔥</div>
-        <button class="menu-button" id="startBtn">START GAME</button>
-        <button class="menu-button" id="instructBtn">INSTRUCTIONS</button>
+        <button class="menu-button" id="startBtn" onclick="startTheGame()">START GAME</button>
+        <button class="menu-button" id="instructBtn" onclick="showTheInstructions()">INSTRUCTIONS</button>
         <div id="instructions" style="display:none;">
             <p><strong>WASD</strong> - Move Around</p>
             <p><strong>Mouse</strong> - Look Around</p>
@@ -164,6 +169,23 @@
         </div>
         <canvas id="radar"></canvas>
     </div>
+    <script>
+        let gameInstance = null;
+        
+        function startTheGame() {
+            console.log('START GAME clicked!');
+            const menu = document.getElementById('menu');
+            menu.classList.add('hidden');
+            gameInstance = new Game();
+            gameInstance.init();
+        }
+        
+        function showTheInstructions() {
+            console.log('INSTRUCTIONS clicked!');
+            const instructions = document.getElementById('instructions');
+            instructions.style.display = instructions.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
     <script src="src/game.js"></script>
 </body>
 </html>
