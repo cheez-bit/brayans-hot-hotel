@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brayan's Hot Hotel</title>
+    <script src="https://cdn.jsdelivr.net/npm/three@r128/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@r128/examples/js/controls/PointerLockControls.js"></script>
     <style>
         * {
             margin: 0;
@@ -32,6 +34,7 @@
             font-size: 14px;
             text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
             font-family: 'Courier New', monospace;
+            z-index: 100;
         }
         #radar {
             bottom: 20px;
@@ -42,6 +45,7 @@
             border: 2px solid #00ff00;
             border-radius: 10px;
             padding: 10px;
+            pointer-events: auto;
         }
         #objectives {
             top: 20px;
@@ -80,15 +84,18 @@
             opacity: 0.5;
         }
         #menu {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.98);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            z-index: 2000;
+        }
+        #menu.hidden {
+            display: none;
         }
         .menu-title {
             font-size: 48px;
@@ -107,11 +114,15 @@
             cursor: pointer;
             border-radius: 5px;
             transition: all 0.3s;
+            font-weight: bold;
         }
         .menu-button:hover {
             background: #00ff00;
             color: #000;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+        }
+        .menu-button:active {
+            transform: scale(0.95);
         }
         #instructions {
             color: #00ff00;
@@ -119,26 +130,24 @@
             margin-top: 40px;
             text-align: center;
             line-height: 1.8;
+            max-width: 600px;
         }
     </style>
 </head>
 <body>
     <div id="menu">
-        <div class="menu-title">BRAYAN'S HOT HOTEL</div>
-        <button class="menu-button" onclick="startGame()">START GAME</button>
-        <button class="menu-button" onclick="showInstructions()">INSTRUCTIONS</button>
+        <div class="menu-title">🔥 BRAYAN'S HOT HOTEL 🔥</div>
+        <button class="menu-button" id="startBtn">START GAME</button>
+        <button class="menu-button" id="instructBtn">INSTRUCTIONS</button>
         <div id="instructions" style="display:none;">
             <p><strong>WASD</strong> - Move</p>
             <p><strong>Mouse</strong> - Look Around</p>
-            <p><strong>SPACE</strong> - Jump</p>
-            <p><strong>CTRL</strong> - Crouch</p>
             <p><strong>SHIFT</strong> - Sprint</p>
+            <p><strong>CTRL</strong> - Crouch</p>
             <p><strong>F</strong> - Toggle Flashlight</p>
             <p><strong>E</strong> - Interact</p>
-            <p><strong>C</strong> - Security Cameras (in Security Room)</p>
-            <p><strong>ESC</strong> - Pause</p>
             <hr style="margin: 20px 0; border: 1px solid #00ff00;">
-            <p>Explore the hotel, complete objectives, avoid enemies, and escape!</p>
+            <p>Explore the hotel, complete objectives, avoid enemies!</p>
         </div>
     </div>
     <div id="hud">
@@ -155,6 +164,6 @@
         </div>
         <canvas id="radar"></canvas>
     </div>
-    <script type="module" src="src/main.js"></script>
+    <script src="src/game.js"></script>
 </body>
 </html>
