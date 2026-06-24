@@ -17,11 +17,6 @@
             overflow: hidden;
             background: #000;
         }
-        #canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
         #hud {
             position: absolute;
             width: 100%;
@@ -95,7 +90,7 @@
             z-index: 2000;
         }
         #menu.hidden {
-            display: none;
+            display: none !important;
         }
         .menu-title {
             font-size: 48px;
@@ -140,14 +135,19 @@
         <button class="menu-button" id="startBtn">START GAME</button>
         <button class="menu-button" id="instructBtn">INSTRUCTIONS</button>
         <div id="instructions" style="display:none;">
-            <p><strong>WASD</strong> - Move</p>
+            <p><strong>WASD</strong> - Move Around</p>
             <p><strong>Mouse</strong> - Look Around</p>
             <p><strong>SHIFT</strong> - Sprint</p>
             <p><strong>CTRL</strong> - Crouch</p>
             <p><strong>F</strong> - Toggle Flashlight</p>
             <p><strong>E</strong> - Interact</p>
             <hr style="margin: 20px 0; border: 1px solid #00ff00;">
-            <p>Explore the hotel, complete objectives, avoid enemies!</p>
+            <p>Explore the hotel, complete objectives, and avoid the 4 enemies!</p>
+            <p style="margin-top: 15px; font-size: 12px;">👾 <strong>Enemies:</strong></p>
+            <p style="font-size: 12px;">🔵 ABHI - The Technician (Disables cameras)</p>
+            <p style="font-size: 12px;">🟠 ASMITA - The Broadcaster (PA system hijack)</p>
+            <p style="font-size: 12px;">🟣 SRI - The Trickster (False signals)</p>
+            <p style="font-size: 12px;">🔴 BRAYAN - The Pursuer (Outside hunter)</p>
         </div>
     </div>
     <div id="hud">
