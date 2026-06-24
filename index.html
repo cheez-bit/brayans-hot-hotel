@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brayan's Hot Hotel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            background: #000;
+        }
+        #canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        #hud {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .hud-element {
+            position: absolute;
+            color: #00ff00;
+            font-size: 14px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+            font-family: 'Courier New', monospace;
+        }
+        #radar {
+            bottom: 20px;
+            right: 20px;
+            width: 200px;
+            height: 200px;
+            background: rgba(0, 30, 0, 0.7);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        #objectives {
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 30, 0, 0.7);
+            border: 2px solid #00ff00;
+            padding: 15px;
+            border-radius: 5px;
+            max-width: 300px;
+        }
+        #status {
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 30, 0, 0.7);
+            border: 2px solid #00ff00;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #flashlight-battery {
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 30, 0, 0.7);
+            border: 2px solid #00ff00;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .crosshair {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 2px solid #00ff00;
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+        #menu {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .menu-title {
+            font-size: 48px;
+            color: #ff4444;
+            margin-bottom: 40px;
+            text-shadow: 0 0 20px rgba(255, 68, 68, 0.8);
+            font-weight: bold;
+        }
+        .menu-button {
+            padding: 15px 40px;
+            margin: 10px;
+            font-size: 20px;
+            background: #333;
+            color: #00ff00;
+            border: 2px solid #00ff00;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        .menu-button:hover {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+        }
+        #instructions {
+            color: #00ff00;
+            font-size: 14px;
+            margin-top: 40px;
+            text-align: center;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <div class="menu-title">BRAYAN'S HOT HOTEL</div>
+        <button class="menu-button" onclick="startGame()">START GAME</button>
+        <button class="menu-button" onclick="showInstructions()">INSTRUCTIONS</button>
+        <div id="instructions" style="display:none;">
+            <p><strong>WASD</strong> - Move</p>
+            <p><strong>Mouse</strong> - Look Around</p>
+            <p><strong>SPACE</strong> - Jump</p>
+            <p><strong>CTRL</strong> - Crouch</p>
+            <p><strong>SHIFT</strong> - Sprint</p>
+            <p><strong>F</strong> - Toggle Flashlight</p>
+            <p><strong>E</strong> - Interact</p>
+            <p><strong>C</strong> - Security Cameras (in Security Room)</p>
+            <p><strong>ESC</strong> - Pause</p>
+            <hr style="margin: 20px 0; border: 1px solid #00ff00;">
+            <p>Explore the hotel, complete objectives, avoid enemies, and escape!</p>
+        </div>
+    </div>
+    <div id="hud">
+        <div class="crosshair"></div>
+        <div id="flashlight-battery" class="hud-element">🔦 Battery: 100%</div>
+        <div id="objectives" class="hud-element">
+            <div style="color: #ffff00; margin-bottom: 10px;">OBJECTIVES:</div>
+            <div id="objectives-list"></div>
+        </div>
+        <div id="status" class="hud-element">
+            <div>Floor: <span id="current-floor">1</span></div>
+            <div>Location: <span id="current-location">Lobby</span></div>
+            <div>Health: <span id="health">100</span>%</div>
+        </div>
+        <canvas id="radar"></canvas>
+    </div>
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>
